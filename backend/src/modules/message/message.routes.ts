@@ -1,8 +1,12 @@
 import { Router } from "express";
-import { sendMessageController } from "./message.controller";
+import {
+  getConversationMessagesController,
+  sendMessageController,
+} from "./message.controller";
 
 const router = Router();
 
 router.post("/", sendMessageController);
+router.get("/:conversationId", getConversationMessagesController);
 
 export default router;

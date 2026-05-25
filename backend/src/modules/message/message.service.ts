@@ -28,17 +28,69 @@ export async function sendMessageService(
   if (!isParticipant)
     throw new AppError("You are not a participant of this conversation", 403);
 
-  const message = await prisma.message.create({
-    data: {
-      content,
-      conversationId,
-      senderId: currentUserId,
-    },
+  const message = await prisma.$transaction(async (tx) => {
+    const createdMessage = await prisma.message.create({
+      data: {
+        content,
+        conversationId,
+        senderId: currentUserId,
+      },
 
-    include: {
-      sender: true,
-    },
+      include: {
+        sender: true,
+      },
+    });
+
+    await tx.conversation.update({
+      where: {
+        id: conversationId,
+      },
+
+      data: {
+        updatedAt: new Date(),
+      },
+    });
+
+    return createdMessage;
   });
 
   return message;
+}
+
+export async function getConversationMessages(
+  currentUserId: string,
+  conversationId: string,
+) {
+  const participant = await prisma.conversationParticipant.findFirst({
+    where: {
+      conversationId,
+      userId: currentUserId,
+    },
+  });
+
+  if (!participant) {
+    throw new AppError("Unauthorized", 403);
+  }
+
+  // Fetch messages
+  const messages = await prisma.message.findMany({
+    where: {
+      conversationId,
+    },
+
+    include: {
+      sender: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+
+    orderBy: {
+      createdAt: "asc",
+    },
+  });
+
+  return messages;
 }
