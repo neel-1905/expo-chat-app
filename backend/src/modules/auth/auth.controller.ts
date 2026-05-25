@@ -67,3 +67,19 @@ export async function refreshController(
     next(error);
   }
 }
+
+export async function meController(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const user = req.user;
+    return res.status(200).json({
+      success: true,
+      data: user,
+    });
+  } catch (error) {
+    next(error);
+  }
+}

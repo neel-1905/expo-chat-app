@@ -10,3 +10,7 @@ export const generateAccessToken = (userId: string) => {
 export function generateRefreshToken() {
   return crypto.randomUUID();
 }
+
+export function verifyAccessToken(token: string) {
+  return jwt.verify(token, envConfig.JWT_SECRET) as { userId: string };
+}
