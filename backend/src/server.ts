@@ -1,6 +1,15 @@
-import app from "./app";
-import envConfig from "./config/env.config";
+import http from "http";
 
-app.listen(envConfig.PORT, () => {
-  console.log(`App is running on Port: ${envConfig.PORT}`);
+import app from "./app";
+
+import { initializeSocket } from "./socket";
+
+const server = http.createServer(app);
+
+initializeSocket(server);
+
+const PORT = process.env.PORT || 4000;
+
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
