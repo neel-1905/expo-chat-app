@@ -8,4 +8,10 @@ model User {
     isActive Boolean @default(true)
 
     authAccounts AuthAccount[]
+
+    refreshTokens RefreshToken[]
+
+    createdAt DateTime @default(now())
+
+    updatedAt DateTime @updatedAt
 }
