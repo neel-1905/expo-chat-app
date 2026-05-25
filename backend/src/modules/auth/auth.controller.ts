@@ -1,6 +1,14 @@
 import { NextFunction, Request, Response } from "express";
-import { registerSchema } from "./auth.validations";
-import { registerService } from "./auth.service";
+import {
+  loginSchema,
+  refreshTokenSchema,
+  registerSchema,
+} from "./auth.validations";
+import {
+  loginService,
+  refreshAccessTokenService,
+  registerService,
+} from "./auth.service";
 
 export async function registerController(
   req: Request,
@@ -16,6 +24,44 @@ export async function registerController(
       success: true,
       data: user,
       message: "User created",
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function loginController(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const validatedData = loginSchema.parse(req.body);
+
+    const data = await loginService(validatedData);
+
+    return res.status(200).json({
+      success: true,
+      data,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function refreshController(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const validatedData = refreshTokenSchema.parse(req.body);
+
+    const data = await refreshAccessTokenService(validatedData.refreshToken);
+
+    return res.status(200).json({
+      success: true,
+      data,
     });
   } catch (error) {
     next(error);

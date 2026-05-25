@@ -7,9 +7,9 @@ model RefreshToken {
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    expiresAt DateTime
-
     revoked Boolean @default(false)
+
+    expiresAt DateTime
 
     createdAt DateTime @default(now())
 }
