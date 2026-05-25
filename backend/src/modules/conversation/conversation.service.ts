@@ -2,6 +2,39 @@ import prisma from "../../lib/prisma";
 import { AppError } from "../../utils/AppError";
 import { CreateConversationInput } from "./conversation.validations";
 
+export async function getUserConversationsService(currentUserId: string) {
+  const conversations = await prisma.conversation.findMany({
+    where: {
+      participants: {
+        some: {
+          userId: currentUserId,
+        },
+      },
+    },
+    include: {
+      participants: {
+        include: {
+          user: true,
+        },
+      },
+      messages: {
+        orderBy: {
+          createdAt: "desc",
+        },
+        take: 1,
+        include: {
+          sender: true,
+        },
+      },
+    },
+    orderBy: {
+      updatedAt: "desc",
+    },
+  });
+
+  return conversations;
+}
+
 export async function createConversationService(
   currentUserId: string,
   data: CreateConversationInput,

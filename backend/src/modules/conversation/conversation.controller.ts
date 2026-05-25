@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { createConversationSchema } from "./conversation.validations";
-import { createConversationService } from "./conversation.service";
+import {
+  createConversationService,
+  getUserConversationsService,
+} from "./conversation.service";
 
 export async function createConversationController(
   req: Request,
@@ -16,6 +19,22 @@ export async function createConversationController(
     return res.status(201).json({
       success: true,
       data: conversation,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getUserConversationsController(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const conversations = await getUserConversationsService(req.user!.id);
+    return res.status(200).json({
+      success: true,
+      data: conversations,
     });
   } catch (error) {
     next(error);
