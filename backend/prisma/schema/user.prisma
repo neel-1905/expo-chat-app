@@ -11,6 +11,12 @@ model User {
 
     refreshTokens RefreshToken[]
 
+    // chats this user belongs to
+    conversationParticipants ConversationParticipant[]
+
+    // messages sent by this user
+    sentMessages Message[]
+
     createdAt DateTime @default(now())
 
     updatedAt DateTime @updatedAt

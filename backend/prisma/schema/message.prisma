@@ -1,0 +1,18 @@
+model Message {
+    id String @id @default(uuid())
+
+    content String
+
+    // who sent message
+    senderId String
+
+    // which chat message belongs to
+    conversationId String
+
+    sender User @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+    conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}

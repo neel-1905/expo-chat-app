@@ -1,0 +1,20 @@
+model Conversation {
+    id String @id @default(uuid())
+
+    // false = private chat
+    // true = group chat
+    isGroup Boolean @default(false)
+
+    // only useful for groups
+    name   String?
+    avatar String?
+
+    // users inside this conversation
+    participants ConversationParticipant[]
+
+    // all messages in this conversation
+    messages Message[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
