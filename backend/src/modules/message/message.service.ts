@@ -1,4 +1,6 @@
+import { SOCKET_EVENTS } from "../../constants/socket.constants";
 import prisma from "../../lib/prisma";
+import { io } from "../../socket";
 import { AppError } from "../../utils/AppError";
 import { SendMessageInput } from "./message.validations";
 
@@ -53,6 +55,8 @@ export async function sendMessageService(
 
     return createdMessage;
   });
+
+  io.to(conversationId).emit(SOCKET_EVENTS.MESSAGE.RECEIVE, message);
 
   return message;
 }
