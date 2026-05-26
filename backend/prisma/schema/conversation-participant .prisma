@@ -9,6 +9,8 @@ model ConversationParticipant {
 
     joinedAt DateTime @default(now())
 
+    lastReadAt DateTime?
+
     // prevent duplicate participant rows
     @@unique([userId, conversationId])
 }

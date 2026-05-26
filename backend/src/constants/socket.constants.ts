@@ -19,4 +19,9 @@ export const SOCKET_EVENTS = {
     STOP: "typing_stop",
     USER_TYPING_STOP: "user_stopped_typing",
   },
+
+  READ_RECEIPT: {
+    MARK_AS_READ: "mark_as_read",
+    SEEN: "message_seen",
+  },
 };

@@ -7,6 +7,7 @@ import { socketAuthMiddleware } from "../middleware/socket-auth.middleware";
 import { AuthenticatedSocket } from "../types/socket";
 import { onlineUsers } from "./store/online-users";
 import { registerPresenceHandlers } from "./handlers/presence.handler";
+import { registerReadReceiptHandlers } from "./handlers/read-receipt.handler";
 
 export let io: Server;
 
@@ -29,5 +30,7 @@ export function initializeSocket(server: HttpServer) {
     registerConversationHandlers(socket);
 
     registerPresenceHandlers(socket);
+
+    registerReadReceiptHandlers(socket);
   });
 }

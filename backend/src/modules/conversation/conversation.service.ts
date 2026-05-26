@@ -113,3 +113,23 @@ export async function createConversationService(
 
   return conversation;
 }
+
+export async function markConversationAsRead(
+  currentUserId: string,
+  conversationId: string,
+) {
+  await prisma.conversationParticipant.update({
+    where: {
+      userId_conversationId: {
+        userId: currentUserId,
+        conversationId,
+      },
+    },
+
+    data: {
+      lastReadAt: new Date(),
+    },
+  });
+
+  return true;
+}
