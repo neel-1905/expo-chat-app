@@ -1,37 +1,26 @@
-import { View, Text, Button } from "react-native";
 import React from "react";
 import { Screen } from "@/components/common/screen";
-import { useAuthStore } from "@/features/auth/store/auth-store";
-import { router } from "expo-router";
-import { saveRefreshToken } from "@/features/auth/services/auth-storage";
+import { View } from "react-native";
+import AppLogo from "@/components/common/app-logo";
+import { AppText } from "@/components/common/app-text";
+import LoginForm from "@/features/auth/ui/login-form";
 
 export default function Login() {
-  const setAuth = useAuthStore((state) => state.setAuth);
-  const user = useAuthStore((state) => state.user);
-
   return (
-    <Screen className="items-center justify-center gap-4">
-      <Text className="text-2xl font-bold">Login</Text>
+    <Screen className="gap-6 text-primary-foreground">
+      <View className="gap-8">
+        {/* Logo */}
+        <AppLogo />
 
-      <Button
-        title="Fake Login"
-        onPress={async () => {
-          setAuth({
-            user: {
-              id: "1",
-              username: "neel",
-              email: "test@test.com",
-            },
-            accessToken: "token",
-          });
+        <View className="gap-2">
+          <AppText className="text-2xl">Welcome back</AppText>
+          <AppText className="text-base text-muted-foreground">
+            Sign in to your account to continue your conversations.
+          </AppText>
+        </View>
 
-          await saveRefreshToken("refresh-token");
-
-          router.replace("/chats");
-        }}
-      />
-
-      <Text>{user?.email}</Text>
+        <LoginForm />
+      </View>
     </Screen>
   );
 }

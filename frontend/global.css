@@ -26,6 +26,12 @@
 
   --color-input: #ffffff;
   --color-ring: #93c5fd;
+
+  /* fonts */
+  --font-sans: Inter_400Regular;
+  --font-medium: Inter_500Medium;
+  --font-semibold: Inter_600SemiBold;
+  --font-bold: Inter_700Bold;
 }
 
 :root {
@@ -50,4 +56,10 @@
 
   --color-input: #ffffff;
   --color-ring: #93c5fd;
+
+  /* fonts */
+  --font-sans: Inter_400Regular;
+  --font-medium: Inter_500Medium;
+  --font-semibold: Inter_600SemiBold;
+  --font-bold: Inter_700Bold;
 }
