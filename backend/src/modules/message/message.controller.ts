@@ -28,9 +28,11 @@ export async function getConversationMessagesController(
 ) {
   try {
     const { conversationId } = req.params;
+    const { cursor } = req.query;
     const messages = await getConversationMessages(
       req.user!.id,
-      req.params.conversationId as string,
+      conversationId as string,
+      cursor as string | undefined,
     );
 
     return res.status(200).json({

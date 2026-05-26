@@ -64,6 +64,7 @@ export async function sendMessageService(
 export async function getConversationMessages(
   currentUserId: string,
   conversationId: string,
+  cursor?: string,
 ) {
   const participant = await prisma.conversationParticipant.findFirst({
     where: {
@@ -92,9 +93,19 @@ export async function getConversationMessages(
     },
 
     orderBy: {
-      createdAt: "asc",
+      createdAt: "desc",
     },
+
+    take: 20,
+
+    ...(cursor && {
+      cursor: {
+        id: cursor,
+      },
+
+      skip: 1,
+    }),
   });
 
-  return messages;
+  return messages.reverse();
 }

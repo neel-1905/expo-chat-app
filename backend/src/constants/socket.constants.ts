@@ -12,4 +12,11 @@ export const SOCKET_EVENTS = {
     ONLINE: "user_online",
     OFFLINE: "user_offline",
   },
+
+  TYPING: {
+    START: "typing_start",
+    USER_TYPING: "user_typing",
+    STOP: "typing_stop",
+    USER_TYPING_STOP: "user_stopped_typing",
+  },
 };
