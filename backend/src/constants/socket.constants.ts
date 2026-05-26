@@ -7,4 +7,9 @@ export const SOCKET_EVENTS = {
   MESSAGE: {
     RECEIVE: "receive_message",
   },
+
+  PRESENCE: {
+    ONLINE: "user_online",
+    OFFLINE: "user_offline",
+  },
 };
