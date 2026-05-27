@@ -4,8 +4,11 @@ import { View } from "react-native";
 import AppLogo from "@/components/common/app-logo";
 import { AppText } from "@/components/common/app-text";
 import LoginForm from "@/features/auth/ui/login-form";
+import { useAuth } from "@/providers/auth-context";
 
 export default function Login() {
+  const { user, status } = useAuth();
+
   return (
     <Screen className="gap-6 text-primary-foreground">
       <View className="gap-8">
@@ -18,6 +21,8 @@ export default function Login() {
             Sign in to your account to continue your conversations.
           </AppText>
         </View>
+
+        {user && <AppText>Logged in as: {status}</AppText>}
 
         <LoginForm />
       </View>

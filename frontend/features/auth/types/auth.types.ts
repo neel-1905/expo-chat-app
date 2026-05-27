@@ -17,3 +17,13 @@ export type LoginData = {
   accessToken: string;
   refreshToken: string;
 };
+
+export type RefreshTokenPayload = {
+  refreshToken: string;
+};
+
+export type RefreshTokenData = {
+  accessToken: string;
+};
+
+export type MeData = User;

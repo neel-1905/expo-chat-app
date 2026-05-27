@@ -14,6 +14,9 @@ import {
 } from "@expo-google-fonts/inter";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import Toast from "react-native-toast-message";
+import { toastConfig } from "@/components/ui/app-toast";
+import { AuthProvider } from "@/providers/auth-context";
 
 export default function RootLayout() {
   const [fontsLoaded, error] = useFonts({
@@ -37,12 +40,15 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider name="modern">
         <QueryProvider>
-          <Stack
-            screenOptions={{
-              headerShown: false,
-            }}
-          />
+          <AuthProvider>
+            <Stack
+              screenOptions={{
+                headerShown: false,
+              }}
+            />
+          </AuthProvider>
         </QueryProvider>
+        <Toast config={toastConfig} />
       </ThemeProvider>
     </GestureHandlerRootView>
   );

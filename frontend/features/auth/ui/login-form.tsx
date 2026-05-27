@@ -7,6 +7,7 @@ import { AppInput } from "@/components/ui/app-input";
 import { AppButton } from "@/components/ui/app-button";
 import { useLogin } from "../hooks/useLogin.hook";
 import { LoginFormValues, loginSchema } from "../lib/auth.validations";
+import { Link } from "expo-router";
 
 export default function LoginForm() {
   const { mutate, isPending } = useLogin();
@@ -60,6 +61,15 @@ export default function LoginForm() {
         loading={isPending}
         onPress={handleSubmit((data) => mutate(data))}
       />
+
+      <View className="items-center">
+        <AppText className="text-sm text-muted-foreground">
+          Don't have an account?{" "}
+          <Link className="text-primary-foreground" href={`/register`}>
+            Register
+          </Link>
+        </AppText>
+      </View>
     </Card>
   );
 }

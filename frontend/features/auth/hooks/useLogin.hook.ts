@@ -1,11 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
-import { useAuthStore } from "../store/auth-store";
+
 import { login } from "../api/auth-api";
 import { saveRefreshToken } from "../services/auth-storage";
 import { router } from "expo-router";
+import { useToast } from "@/hooks/useToast.hook";
 
 export function useLogin() {
-  const setAuth = useAuthStore((state) => state.setAuth);
+  const toast = useToast();
 
   return useMutation({
     mutationFn: login,
@@ -15,12 +16,14 @@ export function useLogin() {
 
       await saveRefreshToken(refreshToken);
 
-      setAuth({
-        user,
-        accessToken,
-      });
+      toast.success("Welcome back!", `Logged in as ${user.email}`);
 
-      router.replace("/(protected)/(tabs)/chats");
+      router.replace("/chats");
+    },
+
+    onError: (error: any) => {
+      const errorMessage = error.message || "An error occurred during login.";
+      toast.error("Login Failed", errorMessage);
     },
   });
 }

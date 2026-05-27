@@ -1,10 +1,10 @@
-import { useAuthStore } from "@/features/auth/store/auth-store";
+import { useAuth } from "@/providers/auth-context";
 import { Redirect } from "expo-router";
 
 export default function Index() {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const { status } = useAuth();
 
-  if (isAuthenticated) {
+  if (status === "authenticated") {
     return <Redirect href="/chats" />;
   }
 

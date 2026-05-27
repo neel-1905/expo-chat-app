@@ -1,6 +1,7 @@
 import { TouchableOpacity, TouchableOpacityProps } from "react-native";
 import { styled } from "nativewind";
 import { AppText } from "@/components/common/app-text";
+import { LoaderCircle } from "lucide-react-native";
 
 const StyledTouchableOpacity = styled(TouchableOpacity);
 
@@ -52,7 +53,7 @@ export function AppButton({
       <AppText
         className={`font-semibold ${labelStyles[variant]} ${labelSizeStyles[size]}`}
       >
-        {loading ? "Loading..." : label}
+        {loading ? <LoaderCircle className="animate-spin" /> : label}
       </AppText>
     </StyledTouchableOpacity>
   );
