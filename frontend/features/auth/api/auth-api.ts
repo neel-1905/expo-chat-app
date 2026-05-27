@@ -5,9 +5,17 @@ import {
   LoginData,
   RefreshTokenData,
   MeData,
+  RegisterPayload,
+  User,
 } from "../types/auth.types";
 import { ApiResponse } from "@/types/api.types";
 import { getRefreshToken } from "../services/auth-storage";
+
+export async function register(payload: RegisterPayload) {
+  const response = await api.post<ApiResponse<User>>("/auth/register", payload);
+
+  return response.data;
+}
 
 export async function login(payload: LoginPayload) {
   const response = await api.post<ApiResponse<LoginData>>(
