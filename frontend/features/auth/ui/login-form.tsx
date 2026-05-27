@@ -57,10 +57,11 @@ export default function LoginForm() {
       />
 
       <AppButton
-        label="Login"
         loading={isPending}
         onPress={handleSubmit((data) => mutate(data))}
-      />
+      >
+        Login
+      </AppButton>
 
       <View className="items-center">
         <AppText className="text-sm text-muted-foreground">

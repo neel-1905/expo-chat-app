@@ -7,6 +7,7 @@ import {
   MeData,
 } from "../types/auth.types";
 import { ApiResponse } from "@/types/api.types";
+import { getRefreshToken } from "../services/auth-storage";
 
 export async function login(payload: LoginPayload) {
   const response = await api.post<ApiResponse<LoginData>>(
@@ -29,6 +30,10 @@ export async function refreshToken(refreshToken: string) {
 
 export async function me() {
   const response = await api.get<ApiResponse<MeData>>("/auth/me", {});
-
   return response.data;
+}
+
+export async function logout() {
+  const refreshToken = await getRefreshToken();
+  await api.post("/auth/logout", { refreshToken });
 }

@@ -114,3 +114,10 @@ export async function refreshAccessTokenService(refreshToken: string) {
 
   return { accessToken };
 }
+
+export async function logoutService(refreshToken: string) {
+  await prisma.refreshToken.update({
+    where: { token: refreshToken },
+    data: { revoked: true },
+  });
+}

@@ -35,7 +35,11 @@ api.interceptors.response.use(
     const originalRequest = error.config;
 
     // if 401 and not already retried, refresh and retry
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url.includes("/auth/")
+    ) {
       originalRequest._retry = true;
 
       try {
@@ -55,6 +59,7 @@ api.interceptors.response.use(
       }
     }
 
+    console.log(error.response);
     const message = error.response?.data?.message ?? "Something went wrong.";
     return Promise.reject(new Error(message));
   },

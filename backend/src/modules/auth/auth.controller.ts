@@ -6,6 +6,7 @@ import {
 } from "./auth.validations";
 import {
   loginService,
+  logoutService,
   refreshAccessTokenService,
   registerService,
 } from "./auth.service";
@@ -79,6 +80,20 @@ export async function meController(
       success: true,
       data: user,
     });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function logoutController(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const { refreshToken } = req.body;
+    await logoutService(refreshToken);
+    return res.status(200).json({ success: true, message: "Logged out" });
   } catch (error) {
     next(error);
   }
